@@ -22,7 +22,7 @@ import {
 
 const StyledAppBar = styled(AppBar)(() => ({
   display: 'block',
-  position: 'static',
+  position: 'sticky',
   backgroundColor: '#013A93',
 }));
 
