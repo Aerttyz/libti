@@ -1,5 +1,4 @@
 import * as React from 'react';
-import Navbar from '../../components/navbar/Navbar';
 import { Grid2 as Grid, styled, Typography } from '@mui/material';
 import BibliotecaMovel from '../../assets/login/biblioteca-movel.png';
 import { FormLogin } from '../../components/forms/FormAuth';
@@ -35,7 +34,6 @@ const SubTitle = styled('Typography')(() => ({
 export default function Login() {
   return (
     <ContainerLogin>
-      <Navbar />
       <Grid
         container
         sx={{

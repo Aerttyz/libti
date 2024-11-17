@@ -21,12 +21,21 @@ import {
   PersonAddOutlined,
   Close
 } from '@mui/icons-material';
+import { NavLink } from 'react-router-dom';
 
 const Icons = (Icon) => {
   return <Icon sx={{ ml: '10px', color: 'white' }} />;
 }
 
-const pages = ['HOME', 'UPLOAD', 'REQUESTS', 'FÓRUM', 'CONTATO', 'LOGIN', 'CRIAR CONTA'];
+const pages = [
+  { name: 'home', url: '/' }, 
+  { name: 'upload', url: '/upload' }, 
+  { name: 'requests', url: '/requests' }, 
+  { name: 'fórum', url: '/forum' }, 
+  { name: 'contato', url: '/contato' }, 
+  { name: 'login', url: '/login' }, 
+  { name: 'criar conta', url: '/cadastro' }
+];
 const icons = [
   Icons(Home),
   Icons(CloudUpload),
@@ -51,18 +60,28 @@ export default function TemporaryDrawer() {
       </Box>
       <List>
         {pages.map((text, index) => (
-          <React.Fragment key={text}>
-            <ListItem disablePadding>
-              <ListItemButton
-                sx={{ '&:hover': { backgroundColor: '#6899E6'} }}
-                onClick={toggleDrawer(false)}
-              >
-                <ListItemIcon>
-                  {icons[index]}
-                </ListItemIcon>
-                <Typography variant="h6" sx={{ color: 'white', fontFamily: 'Roboto',  fontSize: 14, m: '5px 0' }}>{text}</Typography>
-              </ListItemButton>
-            </ListItem>
+          <React.Fragment key={text.nome}>
+            <NavLink 
+              key={text.name}
+              to={text.url}
+              style={({isActive}) => ({
+                backgroundColor: isActive ? '#0045AF' : '',
+                textDecoration: 'none',
+                display: 'flex',
+              })}
+            >
+              <ListItem disablePadding>
+                <ListItemButton
+                  sx={{ '&:hover': { backgroundColor: '#6899E6'} }}
+                  onClick={toggleDrawer(false)}
+                >
+                  <ListItemIcon>
+                    {icons[index]}
+                  </ListItemIcon>
+                  <Typography variant="h6" sx={{ color: 'white', fontFamily: 'Roboto',  fontSize: 14, m: '5px 0' }}>{text.name.toUpperCase()}</Typography>
+                </ListItemButton>
+              </ListItem>
+            </NavLink>
             {index === 4 && <Divider sx={{ margin: '10px', backgroundColor: 'lightgray' }} />}
           </React.Fragment>
         ))}
