@@ -6,7 +6,6 @@ import {
   Box, 
   Toolbar, 
   Typography, 
-  MenuItem, 
   Container, 
   Button 
 } from '@mui/material';
@@ -19,6 +18,7 @@ import {
   Login,
   PersonAddOutlined,
 } from '@mui/icons-material';
+import { NavLink } from 'react-router-dom';
 
 const StyledAppBar = styled(AppBar)(() => ({
   display: 'block',
@@ -26,13 +26,19 @@ const StyledAppBar = styled(AppBar)(() => ({
   backgroundColor: '#013A93',
 }));
 
-const MenuButtons = styled(Button)(() => ({
+const NavLinkMenu = styled(NavLink)(() => ({
+  textDecoration: 'none',
   color: 'white',
   display: 'flex',
   fontFamily: 'Roboto',
   fontSize: 12,
-  fontWeight: 100,
-  marginRight: 6,
+  marginRight: "15px",
+  padding: '7px 10px',
+  borderRadius: '20px',
+  alignItems: 'center',
+  '&:hover': {
+    color: '#6899E6',
+  },
 }));
 
 const StyledButton = styled(Button)(() => ({
@@ -78,7 +84,13 @@ function StyledIcons (Icon) {
   return <Icon sx={{ marginRight: 1, width: '21px' }} />;
 }
 
-const pages = ['Home', 'Upload', 'Requests', 'Fórum', 'Contato'];
+const pages = [
+  { name: 'home', url: '/' }, 
+  { name: 'upload', url: '/upload' }, 
+  { name: 'requests', url: '/requests' }, 
+  { name: 'fórum', url: '/forum' }, 
+  { name: 'contato', url: '/contato' }, 
+];
 const icons = [
   StyledIcons(Home),
   StyledIcons(CloudUpload),
@@ -93,33 +105,31 @@ function ResponsiveAppBar() {
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-            <Drawer id="menu-appbar" sx={{ display: { xs: 'block', md: 'none' } }}>
-              {pages.map((page) => (
-                <MenuItem key={page}>
-                  <Typography sx={{ textAlign: 'center' }}>{page}</Typography>
-                </MenuItem>
-              ))}
-            </Drawer>
+            <Drawer id="menu-appbar" sx={{ display: { xs: 'block', md: 'none' } }} />
           </Box>
           <StyledTypography variant="h5">
             <a href='/' style={{ textDecoration: 'none', color: 'white' }}>LIB<span style={{ color: '#013A93', WebkitTextStroke: '1px white' }}>TI</span></a>
           </StyledTypography>
           <StyledBox>
             {pages.map((page) => (
-              <MenuButtons
-                key={page}
+              <NavLinkMenu
+                key={page.name}
+                to={page.url}
+                style={({isActive}) => ({
+                  backgroundColor: isActive ? '#0045AF' : '',
+                })}
               >
                 {icons[pages.indexOf(page)]}
-                {page}
-              </MenuButtons>
+                {page.name.toUpperCase()}
+              </NavLinkMenu>
             ))}
           </StyledBox>
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <StyledButton>
+            <StyledButton component={NavLink} to={'/login'}>
               <Login sx={{ marginRight: 1, width: '18px' }} />
               LOGIN
             </StyledButton>
-            <Button color='inherit' sx={{ fontSize: 12, fontFamily: 'Roboto' }}>
+            <Button color='inherit' sx={{ fontSize: 12, fontFamily: 'Roboto' }} component={NavLink} to='/cadastro'>
               <PersonAddOutlined sx={{ marginRight: 1, width: '18px' }} />
               CRIAR CONTA
             </Button>
