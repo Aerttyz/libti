@@ -14,7 +14,7 @@ function FormTextField(label) {
 
 function OuDivider() {
   return (
-    <Box display="flex" alignItems="center" justifyContent="center" my={2}>
+    <Box display="flex" alignItems="center" justifyContent="center" m="15px 0 0 0">
       <Divider sx={{ width: '100%', backgroundColor: 'lightblue' }} />
       <Typography sx={{ mx: 2, color: "#6899E6" }}>ou</Typography>
       <Divider sx={{ width: '100%', backgroundColor: 'lightblue' }} />
