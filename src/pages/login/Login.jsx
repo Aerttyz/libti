@@ -70,7 +70,7 @@ export default function Login() {
         >
           <FormLogin
             title='Fazer Login'
-            fields={['Email', 'Senha']}
+            fields={[{ fieldName: 'Email', type: 'email' }, { fieldName: 'Senha', type: 'password' }]}
             login={true}
           />
           <Typography

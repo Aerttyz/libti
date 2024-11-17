@@ -4,10 +4,10 @@ import { TextField, Typography, Box, Divider, Grid2 as Grid } from '@mui/materia
 import { faBookSkull } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-function FormTextField(label) {
+function FormTextField(label, type) {
   return (
     <Box sx={{ width: 500, maxWidth: { xs: '80%', md: '65%' }, marginBottom: 2 }}>
-      <StyledTextField fullWidth size='small' label={label} id={label} required />
+      <StyledTextField fullWidth type={type} size='small' label={label} id={label} required />
     </Box>
   );
 }
@@ -115,7 +115,7 @@ export function FormLogin(props) {
         <FontAwesomeIcon icon={faBookSkull} style={{ marginRight: '10px' }} />LIBTI
       </Typography>
       <StyledForm method='post' action={props.url}>
-        {props.fields.map((field) => FormTextField(field))}
+        {props.fields.map((field) => FormTextField(field.fieldName, field.type))}
         <StyledSubmit type='submit' value={props.title} />
         {props.login && (
           <Grid container sx={{ width: { xs: '80%', sm: '90%', md: '65%' }, mt: '20px' }}>
