@@ -1,6 +1,9 @@
-import Login from "./pages/login/Login";
+import React, { Suspense } from "react";
 import Navbar from './components/navbar/Navbar';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import LoadingBar from "./components/loadingPage/Loading";
+
+const LazyLogin = React.lazy(() => import("./pages/login/Login"));
 
 const router = createBrowserRouter([
   {
@@ -8,7 +11,9 @@ const router = createBrowserRouter([
     element: (
       <>
         <Navbar />
-        <div>Home</div>
+        <Suspense fallback={<LoadingBar />}>
+          <div>Home</div>
+        </Suspense>
       </>
     ),
   },
@@ -17,16 +22,31 @@ const router = createBrowserRouter([
     element: (
       <>
         <Navbar />
-        <Login />
+        <Suspense fallback={<LoadingBar />}>
+          <LazyLogin />
+        </Suspense>
       </>
-    )
+    ),
+  },
+  {
+    path: "/cadastro",
+    element: (
+      <>
+        <Navbar />
+        <Suspense fallback={<LoadingBar />}>
+          <div>Cadastro</div>
+        </Suspense>
+      </>
+    ),
   },
   {
     path: "/upload",
     element: (
       <>
         <Navbar />
-        <div>Upload</div>
+        <Suspense fallback={<LoadingBar />}>
+          <div>Upload</div>
+        </Suspense>
       </>
     ),
   },
@@ -35,7 +55,9 @@ const router = createBrowserRouter([
     element: (
       <>
         <Navbar />
-        <div>Requests</div>
+        <Suspense fallback={<LoadingBar />}>
+          <div>Requests</div>
+        </Suspense>
       </>
     ),
   },
@@ -44,7 +66,9 @@ const router = createBrowserRouter([
     element: (
       <>
         <Navbar />
-        <div>Forum</div>
+        <Suspense fallback={<LoadingBar />}>
+          <div>Forum</div>
+        </Suspense>
       </>
     ),
   },
@@ -53,7 +77,9 @@ const router = createBrowserRouter([
     element: (
       <>
         <Navbar />
-        <div>Contato</div>
+        <Suspense fallback={<LoadingBar />}>
+          <div>Contato</div>
+        </Suspense>
       </>
     ),
   },
