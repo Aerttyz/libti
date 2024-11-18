@@ -86,7 +86,7 @@ const StyledSubmit = styled('input')(({ theme }) => ({
   }
 }));
 
-export function FormLogin(props) {
+export function FormAuth(props) {
   return (
     <DivForm>
       <Typography
@@ -117,7 +117,7 @@ export function FormLogin(props) {
       <StyledForm method='post' action={props.url}>
         {props.fields.map((field) => FormTextField(field.fieldName, field.type))}
         <StyledSubmit type='submit' value={props.title} />
-        {props.login && (
+        {props.isLogin && (
           <Grid container sx={{ width: { xs: '80%', sm: '90%', md: '65%' }, mt: '20px' }}>
             <input type='checkbox' id='remember' />
             <Typography

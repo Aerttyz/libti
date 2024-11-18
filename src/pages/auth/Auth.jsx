@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { Grid2 as Grid, styled, Typography } from '@mui/material';
-import BibliotecaMovel from '../../assets/login/biblioteca-movel.png';
-import { FormLogin } from '../../components/forms/FormAuth';
+import BibliotecaMovel from '../../assets/auth/biblioteca-movel.png';
+import { FormAuth } from '../../components/forms/FormAuth';
 
-const ContainerLogin = styled('div')(() => ({
+const ContainerAuth = styled('div')(() => ({
   height: 'calc(100vh - 64px)',
 }));
 
@@ -31,9 +31,9 @@ const SubTitle = styled('Typography')(() => ({
   marginBottom: '40px',
 }));
 
-export default function Login() {
+export default function Auth(props) {
   return (
-    <ContainerLogin>
+    <ContainerAuth>
       <Grid
         container
         sx={{
@@ -54,7 +54,7 @@ export default function Login() {
         >
           <DivImagem>
             <Title variant="h6">Bem vindo(a) ao LIBTI!</Title>
-            <SubTitle variant="h6">Realize seu login para ter acesso a funcionalidades extras.</SubTitle>
+            <SubTitle variant="h6">Entre ou cadastre-se para ter acesso a funcionalidades extras.</SubTitle>
             <img src={BibliotecaMovel} alt="Logo LIBTI" style={{ width: '200px' }} />
           </DivImagem>
         </Grid>
@@ -68,23 +68,41 @@ export default function Login() {
             alignItems: 'center'
           }}
         >
-          <FormLogin
-            title='Fazer Login'
-            fields={[{ fieldName: 'Email', type: 'email' }, { fieldName: 'Senha', type: 'password' }]}
-            login={true}
+          <FormAuth
+            title={props.isLogin ? 'Fazer Login' : 'Criar conta'}
+            fields={[
+              { fieldName: 'Email', type: 'email' },
+              { fieldName: 'Senha', type: 'password' },
+              ...(!props.isLogin ? [{ fieldName: 'Confirme sua senha', type: 'password' }] : []),
+            ]}            
+            isLogin={props.isLogin}
           />
-          <Typography
-            variant="h6"
-            sx={{
-              color: '#6899E6',
-              fontFamily: 'Roboto',
-              fontSize: 14,
-            }}
-          >
-            Ainda não tem conta? <a href="/cadastro" style={{ color: '#013A93', textDecoration: 'none' }}>Crie uma conta</a>
-          </Typography>
+          {props.isLogin && (
+            <Typography
+              variant="h6"
+              sx={{
+                color: '#6899E6',
+                fontFamily: 'Roboto',
+                fontSize: 14,
+              }}
+            >
+              Ainda não tem conta? <a href='/cadastro' style={{ color: '#013A93', textDecoration: 'none' }}>Crie uma conta</a>
+            </Typography>
+          )}
+          {!props.isLogin && (
+            <Typography
+              variant="h6"
+              sx={{
+                color: '#6899E6',
+                fontFamily: 'Roboto',
+                fontSize: 14,
+              }}
+            >
+              Já possui uma conta? <a href='/login' style={{ color: '#013A93', textDecoration: 'none' }}>Faça login</a>
+            </Typography>
+          )}
         </Grid>
       </Grid>
-    </ContainerLogin>
+    </ContainerAuth>
   );
 }

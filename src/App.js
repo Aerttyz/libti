@@ -3,7 +3,7 @@ import Navbar from './components/navbar/Navbar';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import LoadingBar from "./components/loadingPage/Loading";
 
-const LazyLogin = React.lazy(() => import("./pages/login/Login"));
+const LazyAuth = React.lazy(() => import("./pages/auth/Auth"));
 
 const router = createBrowserRouter([
   {
@@ -23,7 +23,7 @@ const router = createBrowserRouter([
       <>
         <Navbar />
         <Suspense fallback={<LoadingBar />}>
-          <LazyLogin />
+          <LazyAuth isLogin={true}/>
         </Suspense>
       </>
     ),
@@ -34,7 +34,7 @@ const router = createBrowserRouter([
       <>
         <Navbar />
         <Suspense fallback={<LoadingBar />}>
-          <div>Cadastro</div>
+          <LazyAuth isLogin={false}/>
         </Suspense>
       </>
     ),
