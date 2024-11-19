@@ -3,6 +3,7 @@ import Navbar from './components/navbar/Navbar';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import LoadingBar from "./components/loadingPage/Loading";
 
+const LazyHome = React.lazy(() => import("./pages/home/Home"));
 const LazyAuth = React.lazy(() => import("./pages/auth/Auth"));
 
 const router = createBrowserRouter([
@@ -12,7 +13,7 @@ const router = createBrowserRouter([
       <>
         <Navbar />
         <Suspense fallback={<LoadingBar />}>
-          <div>Home</div>
+          <LazyHome />
         </Suspense>
       </>
     ),
