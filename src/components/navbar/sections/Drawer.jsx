@@ -54,7 +54,7 @@ export default function TemporaryDrawer() {
   };
 
   const DrawerList = (
-    <Box sx={{ width: 250, height: '100%', backgroundColor: '#013A93', color: 'white' }} role="presentation">
+    <Box sx={{ width: 250, height: '100%', backgroundColor: '#013A93', color: 'white', overflow: 'scroll' }} role="presentation">
       <Box sx={{ display: 'flex', justifyContent: 'flex-end', padding: '10px' }}>
         <Close onClick={toggleDrawer(false)} sx={{ '&:hover': { backgroundColor: '#6899E6'} }} />
       </Box>
