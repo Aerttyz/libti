@@ -60,7 +60,7 @@ export default function TemporaryDrawer() {
       </Box>
       <List>
         {pages.map((text, index) => (
-          <React.Fragment key={text.nome}>
+          <React.Fragment key={text.name}>
             <NavLink 
               key={text.name}
               to={text.url}

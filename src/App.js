@@ -5,6 +5,7 @@ import LoadingBar from "./components/loadingPage/Loading";
 
 const LazyHome = React.lazy(() => import("./pages/home/Home"));
 const LazyAuth = React.lazy(() => import("./pages/auth/Auth"));
+const LazyContact = React.lazy(() => import("./pages/contact/Contact"));
 
 const router = createBrowserRouter([
   {
@@ -79,7 +80,7 @@ const router = createBrowserRouter([
       <>
         <Navbar />
         <Suspense fallback={<LoadingBar />}>
-          <div>Contato</div>
+          <LazyContact />
         </Suspense>
       </>
     ),

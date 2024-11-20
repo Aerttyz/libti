@@ -4,15 +4,16 @@ import HomeBG from '../../assets/home/home-bg.png';
 import SearchButton from '../../components/home/SearchButton';
 
 const DivBackground = styled('div')(({ theme }) => ({
-  height: 'calc(100vh - 64px)',
   backgroundImage: `url(${HomeBG})`,
   backgroundPosition: 'center',
   backgroundRepeat: 'no-repeat',
   [theme.breakpoints.down('sm')]: {
     backgroundSize: '150%',
+    height: 'calc(100vh - 56px)',
   },
   [theme.breakpoints.up('sm')]: {
     backgroundSize: '100%',
+    height: 'calc(100vh - 64px)',
   },
   [theme.breakpoints.up('md')]: {
     backgroundSize: '80%',
