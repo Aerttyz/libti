@@ -62,7 +62,7 @@ const StyledButton = styled('button')(({ theme }) => ({
   borderRadius: '12px',
   padding: '10px 20px',
   cursor: 'pointer',
-  marginTop: '20px',
+  margin: '20px 0',
   '&:hover': {
     backgroundColor: '#013A93',
     color: 'white',

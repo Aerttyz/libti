@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import FormContact from '../../components/contact/FormContact';
+import Footer from '../../components/contact/Footer';
 
 const StyledDiv = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -11,14 +12,17 @@ const StyledDiv = styled('div')(({ theme }) => ({
     minHeight: 'calc(100vh - 64px)',
   },
   [theme.breakpoints.down('sm')]: {
-    minHeight: 'calc(100vh - 56px)',
+    minHeight: 'calc(100vh - 55px)',
   },
 }));
 
 export default function Contact() {
   return (
-    <StyledDiv>
-      <FormContact />
-    </StyledDiv>
+    <>
+      <StyledDiv>
+        <FormContact />
+      </StyledDiv>
+      <Footer />
+    </>
   );
 }
