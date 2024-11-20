@@ -3,8 +3,13 @@ import { Grid2 as Grid, styled, Typography } from '@mui/material';
 import BibliotecaMovel from '../../assets/auth/biblioteca-movel.png';
 import { FormAuth } from '../../components/forms/FormAuth';
 
-const ContainerAuth = styled('div')(() => ({
-  height: 'calc(100vh - 64px)',
+const ContainerAuth = styled('div')(({ theme }) => ({
+  [theme.breakpoints.up('sm')]: {
+    height: 'calc(100vh - 64px)',
+  },
+  [theme.breakpoints.down('sm')]: {
+    height: 'calc(100vh - 56px)',
+  },
 }));
 
 const DivImagem = styled('div')(() => ({
