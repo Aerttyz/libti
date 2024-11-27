@@ -45,17 +45,35 @@ export default function SearchButton() {
       : [];
 
   return (
-    <Stack spacing={2} sx={{ width: { xs: '80%', sm: '70%', md: '60%' }, alignSelf: 'center', justifySelf: 'center', paddingTop: { xs: '20%', sm: '10%', md: '5%' } }}>
+    <Stack
+      spacing={2}
+      sx={{
+        width: { xs: "80%", sm: "70%", md: "60%" },
+        alignSelf: "center",
+        justifySelf: "center",
+        paddingTop: { xs: "20%", sm: "10%", md: "5%" },
+      }}
+    >
       <Autocomplete
         id="free-solo-demo"
         freeSolo
         options={filteredOptions}
         onInputChange={(event, value) => setInputValue(value)}
         renderInput={(params) => (
-          <form method='GET' action={`/search/${toggleValue}/${inputValue}`}>
+          <form
+            method='GET'
+            onSubmit={(e) => {
+              e.preventDefault();
+              window.location.href = `/search/${toggleValue}?${inputValue}`;
+            }}
+          >
             <SelectionToggleButton
               value={toggleValue}
-              onChange={(event, newValue) => { if (newValue !== null) { setToggleValue(newValue) } }}
+              onChange={(event, newValue) => {
+                if (newValue !== null) {
+                  setToggleValue(newValue);
+                }
+              }}
             />
             <StyledContainer ref={params.InputProps.ref}>
               <StyledSearchField
@@ -71,6 +89,7 @@ export default function SearchButton() {
     </Stack>
   );
 }
+
 
 // Top 100 films as rated by IMDb users. http://www.imdb.com/chart/top
 const top100Films = [

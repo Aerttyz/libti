@@ -104,7 +104,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: ":filter",
-        element: <SearchContent />,     
+        element: <SearchContent />,
       },
     ],
   },
