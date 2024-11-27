@@ -8,6 +8,7 @@ const LazyAuth = React.lazy(() => import("./pages/auth/Auth"));
 const LazyContact = React.lazy(() => import("./pages/contact/Contact"));
 const LazyUpload = React.lazy(() => import("./pages/upload/Upload"));
 const LazyNotFound = React.lazy(() => import("./pages/notFound/NotFound"));
+const LazyRequests = React.lazy(() => import("./pages/requests/Requests"));
 
 const router = createBrowserRouter([
   {
@@ -60,7 +61,7 @@ const router = createBrowserRouter([
       <>
         <Navbar />
         <Suspense fallback={<LoadingBar />}>
-          <div>Requests</div>
+          <LazyRequests />
         </Suspense>
       </>
     ),
