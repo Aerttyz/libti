@@ -6,6 +6,7 @@ import LoadingBar from "./components/loadingPage/Loading";
 const LazyHome = React.lazy(() => import("./pages/home/Home"));
 const LazyAuth = React.lazy(() => import("./pages/auth/Auth"));
 const LazyContact = React.lazy(() => import("./pages/contact/Contact"));
+const LazyNotFound = React.lazy(() => import("./pages/notFound/NotFound"));
 
 const router = createBrowserRouter([
   {
@@ -87,7 +88,14 @@ const router = createBrowserRouter([
   },
   {
     path: "*",
-    element: <div>Not Found</div>,
+    element: (
+      <>
+        <Navbar />
+        <Suspense fallback={<LoadingBar />}>
+          <LazyNotFound />
+        </Suspense>
+      </>
+    ),
   },
 ]);
 
