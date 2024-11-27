@@ -11,6 +11,7 @@ const LazyUpload = React.lazy(() => import("./pages/upload/Upload"));
 const LazyNotFound = React.lazy(() => import("./pages/notFound/NotFound"));
 const LazyRequests = React.lazy(() => import("./pages/requests/Requests"));
 const LazySearch = React.lazy(() => import("./pages/search/Search"));
+const LazyForum = React.lazy(() => import("./pages/forum/Forum"));
 
 const router = createBrowserRouter([
   {
@@ -74,7 +75,7 @@ const router = createBrowserRouter([
       <>
         <Navbar />
         <Suspense fallback={<LoadingBar />}>
-          <div>Forum</div>
+          <LazyForum />
         </Suspense>
       </>
     ),

@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { styled } from '@mui/material';
-import BasicModal from '../../components/search/OutsideModal';
+import CardBook from '../../components/search/CardBook';
 
 const ContainerSearch = styled('div')(({ theme }) => ({
-  minHeight: '100vh',
+  minHeight: '100%',
+  gap: '20px',
   padding: '20px',
   width: '90%',
   justifySelf: 'center',
@@ -15,7 +16,7 @@ const ContainerSearch = styled('div')(({ theme }) => ({
 export default function SearchLivros() {
   return (
     <ContainerSearch>
-      <BasicModal />
+      <CardBook />
     </ContainerSearch>
   );
 }
