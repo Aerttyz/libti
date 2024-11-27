@@ -6,6 +6,7 @@ import LoadingBar from "./components/loadingPage/Loading";
 const LazyHome = React.lazy(() => import("./pages/home/Home"));
 const LazyAuth = React.lazy(() => import("./pages/auth/Auth"));
 const LazyContact = React.lazy(() => import("./pages/contact/Contact"));
+const LazyUpload = React.lazy(() => import("./pages/upload/Upload"));
 const LazyNotFound = React.lazy(() => import("./pages/notFound/NotFound"));
 
 const router = createBrowserRouter([
@@ -26,7 +27,7 @@ const router = createBrowserRouter([
       <>
         <Navbar />
         <Suspense fallback={<LoadingBar />}>
-          <LazyAuth isLogin={true}/>
+          <LazyAuth isLogin={true} />
         </Suspense>
       </>
     ),
@@ -37,7 +38,7 @@ const router = createBrowserRouter([
       <>
         <Navbar />
         <Suspense fallback={<LoadingBar />}>
-          <LazyAuth isLogin={false}/>
+          <LazyAuth isLogin={false} />
         </Suspense>
       </>
     ),
@@ -48,7 +49,7 @@ const router = createBrowserRouter([
       <>
         <Navbar />
         <Suspense fallback={<LoadingBar />}>
-          <div>Upload</div>
+          <LazyUpload />
         </Suspense>
       </>
     ),
@@ -82,6 +83,17 @@ const router = createBrowserRouter([
         <Navbar />
         <Suspense fallback={<LoadingBar />}>
           <LazyContact />
+        </Suspense>
+      </>
+    ),
+  },
+  {
+    path: "/search/:category/:keyword",
+    element: (
+      <>
+        <Navbar />
+        <Suspense fallback={<LoadingBar />}>
+          <div>Search</div>
         </Suspense>
       </>
     ),
