@@ -1,6 +1,6 @@
 import React, { Suspense } from "react";
 import Navbar from './components/navbar/Navbar';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import LoadingBar from "./components/loadingPage/Loading";
