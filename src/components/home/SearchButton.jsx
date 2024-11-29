@@ -51,6 +51,7 @@ export default function SearchButton() {
         width: { xs: "80%", sm: "70%", md: "60%" },
         alignSelf: "center",
         justifySelf: "center",
+        marginX: "auto",
         paddingTop: { xs: "20%", sm: "10%", md: "5%" },
       }}
     >
