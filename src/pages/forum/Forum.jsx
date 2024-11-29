@@ -3,17 +3,14 @@ import {
   Container,
   Typography,
   Box,
-  Button,
   TextField,
   Paper,
   IconButton,
-  Icon,
 } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowUp,
   faArrowDown,
-  faComment,
 } from "@fortawesome/free-solid-svg-icons";
 import styled from "@emotion/styled";
 import SendIcon from "@mui/icons-material/Send";
@@ -63,12 +60,6 @@ const ButtonNewTopic = styled("div")(() => ({
     transform: "scale(1.01)",
   },
   cursor: "pointer",
-}));
-
-const StyledPaper = styled("div")(() => ({
-  display: "flex",
-  justifyContent: "space-between",
-  border: "1px solid #013A93",
 }));
 
 export default function Forum() {
@@ -142,14 +133,14 @@ export default function Forum() {
                 </Typography>
                 <Box display="flex" alignItems="center" mt={2} ml={2} gap={2}>
                   <Box display="flex">
-                  <IconButton>
-                    <ChatBubbleOutlineIcon
-                      color="primary"
-                    />
-                  
-                    <Typography variant="body2" color="primary">
-                      {post.comments}
-                    </Typography>
+                    <IconButton>
+                      <ChatBubbleOutlineIcon
+                        color="primary"
+                      />
+
+                      <Typography variant="body2" color="primary">
+                        {post.comments}
+                      </Typography>
                     </IconButton>
                   </Box>
                   <ReportGmailerrorredIcon color="primary" />
@@ -158,7 +149,7 @@ export default function Forum() {
                       sx={{
                         ml: "auto",
                       }}
-                    color="primary"/>
+                      color="primary" />
                   </IconButton>
                 </Box>
               </Box>
