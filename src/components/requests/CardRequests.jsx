@@ -19,6 +19,7 @@ import {
 } from '@mui/icons-material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleCheck, faCircleXmark } from '@fortawesome/free-solid-svg-icons';
+import { toast } from 'react-toastify';
 
 function createData(codigo, disciplina, userEnvio) {
   return {
@@ -42,6 +43,14 @@ function createData(codigo, disciplina, userEnvio) {
   };
 }
 
+const handleAcceptRequest = () => {
+  toast.success('Request aceito!');
+};
+
+const handleRejectRequest = () => {
+  toast.success('Request rejeitado!');
+};
+
 function Row(props) {
   const { row } = props;
   const [open, setOpen] = React.useState(false);
@@ -63,8 +72,28 @@ function Row(props) {
         </TableCell>
         <TableCell>{row.disciplina}</TableCell>
         <TableCell>{row.userEnvio}</TableCell>
-        <TableCell><a href='/aceitar:codigo'><FontAwesomeIcon icon={faCircleCheck} style={{ color: 'green', height: '25px' }} /></a></TableCell>
-        <TableCell><a href='/recusar:codigo'><FontAwesomeIcon icon={faCircleXmark} style={{ color: 'red', height: '25px' }} /></a></TableCell>
+        <TableCell>
+          <FontAwesomeIcon
+            icon={faCircleCheck}
+            style={{
+              color: 'green',
+              height: '25px',
+              cursor: 'pointer'
+            }}
+            onClick={handleAcceptRequest}
+          />
+        </TableCell>
+        <TableCell>
+          <FontAwesomeIcon
+            icon={faCircleXmark}
+            style={{
+              color: 'red',
+              height: '25px',
+              cursor: 'pointer'
+            }}
+            onClick={handleRejectRequest}
+          />
+        </TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -129,7 +158,7 @@ const rows = [
 
 export default function CardRequests() {
   return (
-    <TableContainer component={Paper} sx={{ boxShadow: 4, borderRadius: '10px' }}>
+    <TableContainer component={Paper} sx={{ border: '1px solid #6899E6', boxShadow: 4, borderRadius: '10px' }}>
       <Table aria-label="collapsible table">
         <TableHead>
           <TableRow>
