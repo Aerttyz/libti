@@ -3,17 +3,14 @@ import {
   Container,
   Typography,
   Box,
-  Button,
   TextField,
   Paper,
   IconButton,
-  Icon,
 } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowUp,
   faArrowDown,
-  faComment,
 } from "@fortawesome/free-solid-svg-icons";
 import styled from "@emotion/styled";
 import SendIcon from "@mui/icons-material/Send";
@@ -65,13 +62,6 @@ const ButtonNewTopic = styled("div")(() => ({
   },
   cursor: "pointer",
 }));
-
-const StyledPaper = styled("div")(() => ({
-  display: "flex",
-  justifyContent: "space-between",
-  border: "1px solid #013A93",
-}));
-
 export default function Forum() {
   const [posts, setPosts] = useState(initialPosts);
   const [visibleComments, setVisibleComments] = useState({});
@@ -173,7 +163,9 @@ export default function Forum() {
                       </Typography>
                     </IconButton>
                   </Box>
+                  <IconButton>
                   <ReportGmailerrorredIcon color="primary" />
+                  </IconButton>
                 </Box>
               </Box>
               {visibleComments[post.id] && post.comments > 0 ? (
