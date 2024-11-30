@@ -1,5 +1,7 @@
 import React, { Suspense } from "react";
 import Navbar from './components/navbar/Navbar';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import LoadingBar from "./components/loadingPage/Loading";
 import SearchContent from "./pages/search/SearchContent";
@@ -123,7 +125,17 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <RouterProvider router={router} />
+    <>
+      <RouterProvider router={router} />
+      <ToastContainer 
+        position="bottom-right" 
+        autoClose={3000} 
+        closeOnClick={true} 
+        pauseOnHover={true} 
+        draggable={true} 
+        theme="colored"
+        />
+    </>
   );
 }
 

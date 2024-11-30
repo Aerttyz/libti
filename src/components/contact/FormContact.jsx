@@ -1,5 +1,7 @@
 import React from 'react';
 import { styled, Grid2 as Grid, Typography, TextField } from '@mui/material';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const StyledTypography = styled(Typography)(({ theme }) => ({
   fontFamily: 'Roboto',
@@ -52,7 +54,6 @@ const StyledForm = styled('form')(({ theme }) => ({
   [theme.breakpoints.up('sm')]: {
     width: '60%',
   },
-
 }));
 
 const StyledButton = styled('button')(({ theme }) => ({
@@ -70,20 +71,29 @@ const StyledButton = styled('button')(({ theme }) => ({
 }));
 
 export default function FormContact() {
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    if (!event.target.name.value || !event.target.email.value || !event.target.subject.value || !event.target.message.value) {
+      toast.warn('Preencha todos os campos!');
+      return;
+    }
+    toast.success('Mensagem enviada com sucesso!');
+  };
+
   return (
     <Grid container sx={{ width: '100%' }}>
       <Grid item size={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <StyledTypography variant="h3">CONTATO</StyledTypography>
       </Grid>
       <Grid item size={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <StyledForm method='post' action='/mail'>
+        <StyledForm onSubmit={handleSubmit}>
           <Grid container>
             <Grid item size={{ xs: 12, sm: 6 }}>
               <StyledTextField
                 id='name'
                 label='Nome'
                 variant='outlined'
-                required
                 sx={{
                   width: { xs: '100%', sm: '97%' },
                 }}
@@ -95,7 +105,6 @@ export default function FormContact() {
                 label='Email'
                 variant='outlined'
                 type='email'
-                required
                 sx={{
                   width: { xs: '100%', sm: '97%' },
                 }}
@@ -106,7 +115,6 @@ export default function FormContact() {
                 id='subject'
                 label='Assunto'
                 variant='outlined'
-                required
               />
             </Grid>
             <Grid item size={12}>
@@ -115,7 +123,6 @@ export default function FormContact() {
                 label="Mensagem"
                 multiline
                 rows={5}
-                required
                 variant="outlined"
               />
             </Grid>

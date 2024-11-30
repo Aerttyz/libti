@@ -157,13 +157,13 @@ export default function Forum() {
                   <Box display="flex">
                     <IconButton>
                       <ChatBubbleOutlineIcon color="primary" onClick={() => handleTextShow(post.id)}/>
-
                       <Typography variant="body2" color="primary">
                         {post.comments}
                       </Typography>
                     </IconButton>
                   </Box>
                   <IconButton>
+
                   <ReportGmailerrorredIcon color="primary" />
                   </IconButton>
                 </Box>
