@@ -18,6 +18,7 @@ import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import ReportGmailerrorredIcon from "@mui/icons-material/ReportGmailerrorred";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import Avatar from "@mui/material/Avatar";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
 const initialPosts = [
   {
@@ -61,9 +62,10 @@ const ButtonNewTopic = styled("div")(() => ({
   },
   cursor: "pointer",
 }));
-
 export default function Forum() {
   const [posts, setPosts] = useState(initialPosts);
+  const [visibleComments, setVisibleComments] = useState({});
+  const [visibleText, setVisibleText] = useState({});
   const handleUpvote = (id) => {
     setPosts((prevPosts) =>
       prevPosts.map((post) =>
@@ -79,6 +81,19 @@ export default function Forum() {
           : post
       )
     );
+  };
+  const handleComentShow = (id) => {
+    setVisibleComments((prev) => ({
+      ...prev,
+      [id]: !prev[id],
+    }));
+  };
+
+  const handleTextShow = (id) => {
+    setVisibleText((prev) => ({
+      ...prev,
+      [id]: !prev[id],
+    }));
   };
 
   return (
@@ -125,37 +140,72 @@ export default function Forum() {
                 </IconButton>
               </Box>
               <Box>
-                <Typography variant="caption" color="text.secondary" ml={2}>
+                <Typography variant="caption" color="primary" ml={2}>
                   {post.date}
                 </Typography>
-                <Typography variant="body1" ml={2}>
+                <Typography
+                  variant="body1"
+                  ml={2}
+                  sx={{
+                    color: "#013A93",
+                    fontWeight: "bold",
+                  }}
+                >
                   {post.text}
                 </Typography>
                 <Box display="flex" alignItems="center" mt={2} ml={2} gap={2}>
                   <Box display="flex">
                     <IconButton>
-                      <ChatBubbleOutlineIcon
-                        color="primary"
-                      />
-
+                      <ChatBubbleOutlineIcon color="primary" onClick={() => handleTextShow(post.id)}/>
                       <Typography variant="body2" color="primary">
                         {post.comments}
                       </Typography>
                     </IconButton>
                   </Box>
-                  <ReportGmailerrorredIcon color="primary" />
                   <IconButton>
-                    <KeyboardArrowUpIcon
-                      sx={{
-                        ml: "auto",
-                      }}
-                      color="primary" />
+
+                  <ReportGmailerrorredIcon color="primary" />
                   </IconButton>
                 </Box>
               </Box>
+              {visibleComments[post.id] && post.comments > 0 ? (
+                <KeyboardArrowUpIcon
+                  sx={{
+                    ml: "auto",
+                    mt: "auto",
+                    cursor: "pointer",
+                    transition: "all 0.3s ease",
+                    "&:hover": {
+                      backgroundColor: "#e0e0e0",
+                      boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)",
+                      transform: "scale(1.01)",
+                    },
+                    display: "flex",
+                  }}
+                  onClick={() => handleComentShow(post.id)}
+                  color="primary"
+                />
+              ) : (
+                <KeyboardArrowDownIcon
+                  sx={{
+                    ml: "auto",
+                    mt: "auto",
+                    cursor: "pointer",
+                    transition: "all 0.3s ease",
+                    "&:hover": {
+                      backgroundColor: "#e0e0e0",
+                      boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)",
+                      transform: "scale(1.01)",
+                    },
+                    display: "flex",
+                  }}
+                  onClick={() => handleComentShow(post.id)}
+                  color="primary"
+                />
+              )}
             </Box>
             <Box>
-              {post.comments > 0 && (
+              {visibleComments[post.id] && post.comments > 0 && (
                 <>
                   <Box
                     sx={{
@@ -220,28 +270,30 @@ export default function Forum() {
                       </Typography>
                     </Box>
                   </Box>
-                  <Box
-                    mt={2}
-                    sx={{
-                      boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
-                    }}
-                  >
-                    <TextField
-                      fullWidth
-                      variant="outlined"
-                      size="small"
-                      placeholder="Comentar..."
-                      InputProps={{
-                        endAdornment: (
-                          <IconButton>
-                            <SendIcon color="primary" />
-                          </IconButton>
-                        ),
-                      }}
-                    />
-                  </Box>
                 </>
               )}
+              {visibleText[post.id] && (
+                    <Box
+                      mt={2}
+                      sx={{
+                        boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+                      }}
+                    >
+                      <TextField
+                        fullWidth
+                        variant="outlined"
+                        size="small"
+                        placeholder="Comentar..."
+                        InputProps={{
+                          endAdornment: (
+                            <IconButton>
+                              <SendIcon color="primary" />
+                            </IconButton>
+                          ),
+                        }}
+                      />
+                    </Box>
+                  )}
             </Box>
           </Box>
         </Paper>
