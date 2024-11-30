@@ -19,6 +19,9 @@ import ReportGmailerrorredIcon from "@mui/icons-material/ReportGmailerrorred";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import Avatar from "@mui/material/Avatar";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import { toast } from 'react-toastify';
+import TopicModal from "../../components/forum/TopicModal";
+import { ToastContainer } from 'react-toastify';
 
 const initialPosts = [
   {
@@ -44,7 +47,6 @@ const Users = [
     date: "07/04/2025 21:37",
   },
 ];
-
 const ButtonNewTopic = styled("div")(() => ({
   display: "flex",
   justifyContent: "space-between",
@@ -63,6 +65,9 @@ const ButtonNewTopic = styled("div")(() => ({
   cursor: "pointer",
 }));
 export default function Forum() {
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   const [posts, setPosts] = useState(initialPosts);
   const [visibleComments, setVisibleComments] = useState({});
   const [visibleText, setVisibleText] = useState({});
@@ -88,6 +93,9 @@ export default function Forum() {
       [id]: !prev[id],
     }));
   };
+  const handleOpenModal = () => { 
+    setOpen(true);
+  };
 
   const handleTextShow = (id) => {
     setVisibleText((prev) => ({
@@ -96,9 +104,28 @@ export default function Forum() {
     }));
   };
 
+  const handleReport = (event) => {
+    event.preventDefault()
+    if(!event.target.comment.value){
+      toast.warn('Comentário vazio')
+    }else{
+      toast.success('Comentário enviado com sucesso')
+    }
+  }
+
   return (
+    <>
+    <ToastContainer 
+        position="bottom-right" 
+        autoClose={3000} 
+        closeOnClick={true} 
+        pauseOnHover={true} 
+        draggable={true} 
+        theme="colored"
+        />
     <Container maxWidth="md" sx={{ marginTop: 4 }}>
-      <ButtonNewTopic>
+      <TopicModal open={open} handleClose={handleClose} />
+      <ButtonNewTopic onClick={handleOpenModal}>
         <Typography variant="body" sx={{ color: "#013A93" }}>
           Criar Novo Tópico
         </Typography>
@@ -279,19 +306,22 @@ export default function Forum() {
                         boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
                       }}
                     >
+                      <form onSubmit={handleReport}>
                       <TextField
+                        id="comment"
                         fullWidth
                         variant="outlined"
                         size="small"
                         placeholder="Comentar..."
                         InputProps={{
                           endAdornment: (
-                            <IconButton>
-                              <SendIcon color="primary" />
+                            <IconButton type="submit">
+                              <SendIcon color="primary"/>
                             </IconButton>
                           ),
                         }}
                       />
+                      </form>
                     </Box>
                   )}
             </Box>
@@ -299,5 +329,6 @@ export default function Forum() {
         </Paper>
       ))}
     </Container>
+    </>
   );
 }
