@@ -52,10 +52,11 @@ export default function TopicModal({ open, handleClose }) {
     e.preventDefault();
     if (e.target.title.value || e.target.content.value) {
       toast.success("Tópico criado com sucesso!");
+      handleClose();
     } else {
       toast.warn("Preencha todos os campos!");
     }
-    handleClose();
+    
   };
 
   return (
