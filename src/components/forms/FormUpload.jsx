@@ -94,11 +94,12 @@ const handleSubmit = (e, typeForm) => {
 
   if (typeForm === 'disciplina') {
     const disciplina = e.target.disciplina.value;
+    const codigo = e.target.codigo.value;
     const professor = e.target.professor.value;
     const semestre = e.target.semestre.value;
     const linkArquivos = e.target.linkArquivos.value;
 
-    if (!disciplina || !professor || !semestre || !linkArquivos) {
+    if (!disciplina || !codigo || !professor || !semestre || !linkArquivos) {
       toast.warn('Preencha todos os campos obrigatórios!');
       return;
     }

@@ -46,7 +46,8 @@ const fieldsLivro = [
 ];
 
 const fieldsMaterial = [
-  { id: 'disciplina', label: 'Disciplina *', type: 'text' },
+  { id: 'disciplina', label: 'Nome da Disciplina *', type: 'text' },
+  { id: 'codigo', label: 'Código da Disciplina *', type: 'text' },
   { id: 'professor', label: 'Professor *', type: 'text' },
   { id: 'semestre', label: 'Semestre *', type: 'text' },
   { id: 'linkArquivos', label: 'Link para Arquivos *', type: 'text' },
