@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { styled, Typography } from '@mui/material';
 import CardRequests from '../../components/requests/CardRequests';
+import CardRequestsLivros from '../../components/requests/CardRequestsLivros';
+import SelectionToggleButton from '../../components/home/SelectionSearch';
 
 const ContainerRequests = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -44,11 +46,21 @@ const StyledTypography = styled(Typography)(({ theme }) => ({
 }));
 
 export default function Requests() {
+  const [toggleValue, setToggleValue] = React.useState('disciplina');
+
   return (
     <ContainerRequests>
       <StyledTypography variant="h1">REQUESTS</StyledTypography>
+      <SelectionToggleButton
+        value={toggleValue}
+        onChange={(event, newValue) => {
+          if (newValue !== null) {
+            setToggleValue(newValue);
+          }
+        }}
+      />
       <ContainerItemsRequests>
-        <CardRequests />
+        {toggleValue === 'disciplina' ? <CardRequests /> : <CardRequestsLivros />}
       </ContainerItemsRequests>
     </ContainerRequests>
   );
