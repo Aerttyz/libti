@@ -1,6 +1,6 @@
 import React from "react";
 import { styled } from "@mui/material/styles";
-import { Box, Avatar, TextField, Button, InputAdornment, IconButton } from "@mui/material";
+import { Box, Avatar, TextField, Button, InputAdornment } from "@mui/material";
 import { toast } from "react-toastify";
 import { Edit } from "@mui/icons-material";
 
