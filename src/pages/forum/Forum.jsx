@@ -8,10 +8,7 @@ import {
   IconButton,
 } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faArrowUp,
-  faArrowDown,
-} from "@fortawesome/free-solid-svg-icons";
+import { faArrowUp, faArrowDown } from "@fortawesome/free-solid-svg-icons";
 import styled from "@emotion/styled";
 import SendIcon from "@mui/icons-material/Send";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
@@ -19,23 +16,25 @@ import ReportGmailerrorredIcon from "@mui/icons-material/ReportGmailerrorred";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import Avatar from "@mui/material/Avatar";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import { toast } from 'react-toastify';
+import { toast, ToastContainer } from "react-toastify";
 import TopicModal from "../../components/forum/TopicModal";
-import { ToastContainer } from 'react-toastify';
+
+const defaultAvatar =
+  "https://super.abril.com.br/wp-content/uploads/2018/07/5281183b865be245b1000225gorila.jpeg?quality=70&w=720&crop=1";
 
 const initialPosts = [
   {
     id: 1,
     text: "Alguém tem disponível o livro de vga? Aquele do Jacir Venturi",
     date: "07/04/2025 21:37",
-    comments: 0,
+    comments: [],
     votes: 1,
   },
   {
     id: 2,
     text: "Se alguém tiver algum material de desenvolvimento web 1, se puder disponibilizar aqui fico agradecida!!",
     date: "21/03/2025 08:41",
-    comments: 1,
+    comments: [{ text: "Tenho um material bom, vou enviar!" }],
     votes: 4,
   },
 ];
@@ -47,6 +46,7 @@ const Users = [
     date: "07/04/2025 21:37",
   },
 ];
+
 const ButtonNewTopic = styled("div")(() => ({
   display: "flex",
   justifyContent: "space-between",
@@ -64,13 +64,16 @@ const ButtonNewTopic = styled("div")(() => ({
   },
   cursor: "pointer",
 }));
+
 export default function Forum() {
   const [open, setOpen] = useState(false);
+  const [posts, setPosts] = useState(initialPosts);
+  const [currentVisibleComment, setCurrentVisibleComment] = useState(null);
+  const [currentVisibleText, setCurrentVisibleText] = useState(null);
+
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const [posts, setPosts] = useState(initialPosts);
-  const [visibleComments, setVisibleComments] = useState({});
-  const [visibleText, setVisibleText] = useState({});
+
   const handleUpvote = (id) => {
     setPosts((prevPosts) =>
       prevPosts.map((post) =>
@@ -78,6 +81,7 @@ export default function Forum() {
       )
     );
   };
+
   const handleDownvote = (id) => {
     setPosts((prevPosts) =>
       prevPosts.map((post) =>
@@ -87,31 +91,25 @@ export default function Forum() {
       )
     );
   };
+
   const handleComentShow = (id) => {
-    setVisibleComments((prev) => ({
-      ...prev,
-      [id]: !prev[id],
-    }));
-  };
-  const handleOpenModal = () => {
-    setOpen(true);
+    setCurrentVisibleComment(currentVisibleComment === id ? null : id);
   };
 
   const handleTextShow = (id) => {
-    setVisibleText((prev) => ({
-      ...prev,
-      [id]: !prev[id],
-    }));
+    setCurrentVisibleText(currentVisibleText === id ? null : id);
   };
 
   const handleReport = (event) => {
-    event.preventDefault()
-    if (!event.target.comment.value) {
-      toast.warn('Comentário vazio')
+    event.preventDefault();
+    const comment = event.target.elements.comment.value.trim();
+    if (!comment) {
+      toast.warn("Comentário vazio");
     } else {
-      toast.success('Comentário enviado com sucesso')
+      toast.success("Comentário enviado com sucesso");
+      event.target.elements.comment.value = "";
     }
-  }
+  };
 
   return (
     <>
@@ -125,11 +123,11 @@ export default function Forum() {
       />
       <Container maxWidth="md" sx={{ marginTop: 4 }}>
         <TopicModal open={open} handleClose={handleClose} />
-        <ButtonNewTopic onClick={handleOpenModal}>
+        <ButtonNewTopic onClick={handleOpen}>
           <Typography variant="body" sx={{ color: "#013A93" }}>
             Criar Novo Tópico
           </Typography>
-          <SendIcon color="primary"></SendIcon>
+          <SendIcon color="primary" />
         </ButtonNewTopic>
         {posts.map((post) => (
           <Paper
@@ -181,60 +179,36 @@ export default function Forum() {
                     {post.text}
                   </Typography>
                   <Box display="flex" alignItems="center" mt={2} ml={2} gap={2}>
-                    <Box display="flex">
-                      <IconButton>
-                        <ChatBubbleOutlineIcon color="primary" onClick={() => handleTextShow(post.id)} />
-                        <Typography variant="body2" color="primary">
-                          {post.comments}
-                        </Typography>
-                      </IconButton>
-                    </Box>
+                    <IconButton onClick={() => handleTextShow(post.id)}>
+                      <ChatBubbleOutlineIcon color="primary" />
+                      <Typography variant="body2" color="primary">
+                        {post.comments.length}
+                      </Typography>
+                    </IconButton>
                     <IconButton>
-
                       <ReportGmailerrorredIcon color="primary" />
                     </IconButton>
                   </Box>
                 </Box>
-                {visibleComments[post.id] && post.comments > 0 ? (
-                  <KeyboardArrowUpIcon
-                    sx={{
-                      ml: "auto",
-                      mt: "auto",
-                      cursor: "pointer",
-                      transition: "all 0.3s ease",
-                      "&:hover": {
-                        backgroundColor: "#e0e0e0",
-                        boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)",
-                        transform: "scale(1.01)",
-                      },
-                      display: "flex",
-                    }}
-                    onClick={() => handleComentShow(post.id)}
-                    color="primary"
-                  />
-                ) : (
-                  <KeyboardArrowDownIcon
-                    sx={{
-                      ml: "auto",
-                      mt: "auto",
-                      cursor: "pointer",
-                      transition: "all 0.3s ease",
-                      "&:hover": {
-                        backgroundColor: "#e0e0e0",
-                        boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)",
-                        transform: "scale(1.01)",
-                      },
-                      display: "flex",
-                    }}
-                    onClick={() => handleComentShow(post.id)}
-                    color="primary"
-                  />
-                )}
+                <IconButton
+                  onClick={() => handleComentShow(post.id)}
+                  sx={{
+                    ml: "auto",
+                    mt: "auto",
+                  }}
+                >
+                  {currentVisibleComment === post.id ? (
+                    <KeyboardArrowUpIcon color="primary" />
+                  ) : (
+                    <KeyboardArrowDownIcon color="primary" />
+                  )}
+                </IconButton>
               </Box>
               <Box>
-                {visibleComments[post.id] && post.comments > 0 && (
-                  <>
+                {currentVisibleComment === post.id && post.comments.length > 0 &&
+                  post.comments.map((comment, index) => (
                     <Box
+                      key={index}
                       sx={{
                         border: "1px solid #013A93",
                         borderRadius: 2,
@@ -245,10 +219,10 @@ export default function Forum() {
                     >
                       <Box display="flex">
                         <Avatar
-                          src="https://super.abril.com.br/wp-content/uploads/2018/07/5281183b865be245b1000225gorila.jpeg?quality=70&w=720&crop=1"
+                          src={defaultAvatar}
                           sx={{
-                            width: 15,
-                            height: 15,
+                            width: 30,
+                            height: 30,
                             marginRight: 1,
                             ml: 1,
                           }}
@@ -262,28 +236,6 @@ export default function Forum() {
                         >
                           {Users.find((user) => user.id === 1).name}
                         </Typography>
-                        <Typography
-                          color="primary"
-                          variant="caption"
-                          sx={{
-                            ml: 1,
-                          }}
-                        >
-                          {Users.find((user) => user.id === 1).date}
-                        </Typography>
-                        <ReportGmailerrorredIcon
-                          color="primary"
-                          sx={{
-                            ml: "auto",
-                            cursor: "pointer",
-                            transition: "all 0.3s ease",
-                            "&:hover": {
-                              backgroundColor: "#e0e0e0",
-                              boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)",
-                              transform: "scale(1.01)",
-                            },
-                          }}
-                        />
                       </Box>
                       <Box mt={1} ml={2}>
                         <Typography
@@ -293,13 +245,12 @@ export default function Forum() {
                             color: "#013A93",
                           }}
                         >
-                          Comentário teste
+                          {comment.text}
                         </Typography>
                       </Box>
                     </Box>
-                  </>
-                )}
-                {visibleText[post.id] && (
+                  ))}
+                {currentVisibleText === post.id && (
                   <Box
                     mt={2}
                     sx={{

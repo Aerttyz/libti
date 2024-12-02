@@ -12,8 +12,8 @@ const style = {
   position: "absolute",
   top: "50%",
   left: "50%",
-  width: { xs: "70%", sm: "30%" },
-  height: { xs: "50%", sm: "45%" },
+  width: { xs: "80%", sm: "45%" },
+  maxHeight: "90%",
   transform: "translate(-50%, -50%)",
   bgcolor: "background.paper",
   border: "1px solid #013A93",
@@ -22,7 +22,7 @@ const style = {
   p: 4,
 };
 
-const StyledForm = styled("form")(({}) => ({
+const StyledForm = styled("form")(() => ({
   width: "100%",
   margin: "10px 0",
   display: "flex",
@@ -56,7 +56,6 @@ export default function TopicModal({ open, handleClose }) {
     } else {
       toast.warn("Preencha todos os campos!");
     }
-    
   };
 
   return (
@@ -67,26 +66,26 @@ export default function TopicModal({ open, handleClose }) {
       aria-describedby="modal-modal-description"
     >
       <Box sx={style}>
+        <Box display="flex">
+          <Typography
+            variant="h6"
+            sx={{
+              color: "#013A93",
+              fontWeight: "bold",
+              alignSelf: "center",
+            }}
+          >
+            Criar Tópico
+          </Typography>
+          <CloseIcon
+            sx={{
+              ml: "auto",
+              cursor: "pointer",
+            }}
+            onClick={handleClose}
+          />
+        </Box>
         <StyledForm onSubmit={handleSubmit}>
-          <Box display="flex">
-            <Typography
-              variant="h6"
-              sx={{
-                color: "#013A93",
-                fontWeight: "bold",
-                alignSelf: "center",
-              }}
-            >
-              Criar Tópico
-            </Typography>
-            <CloseIcon
-              sx={{
-                ml: "auto",
-                cursor: "pointer",
-              }}
-              onClick={handleClose}
-            />
-          </Box>
           <TextField
             id="title"
             label="Título"
@@ -98,6 +97,8 @@ export default function TopicModal({ open, handleClose }) {
             label="Conteúdo"
             variant="outlined"
             margin="normal"
+            multiline
+            sx={{ maxHeight: "300px" }}
           />
           <Button
             variant="contained"
