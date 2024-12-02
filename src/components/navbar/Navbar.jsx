@@ -88,18 +88,11 @@ function StyledIcons(Icon) {
 }
 
 const pages = [
-  { name: 'home', url: '/', role: 'all' },
-  { name: 'upload', url: '/upload', role: 'all' },
-  { name: 'requests', url: '/requests', role: 'admin' },
-  { name: 'fórum', url: '/forum', role: 'all' },
-  { name: 'contato', url: '/contato', role: 'all' },
-];
-const icons = [
-  StyledIcons(Home),
-  StyledIcons(CloudUpload),
-  StyledIcons(CloudDownload),
-  StyledIcons(Forum),
-  StyledIcons(MailOutline),
+  { name: 'home', url: '/', role: 'all', icon: StyledIcons(Home) },
+  { name: 'upload', url: '/upload', role: 'user', icon: StyledIcons(CloudUpload) },
+  { name: 'requests', url: '/requests', role: 'admin', icon: StyledIcons(CloudDownload) },
+  { name: 'fórum', url: '/forum', role: 'user', icon: StyledIcons(Forum) },
+  { name: 'contato', url: '/contato', role: 'all', icon: StyledIcons(MailOutline) },
 ];
 
 function ResponsiveAppBar() {
@@ -124,7 +117,7 @@ function ResponsiveAppBar() {
                   backgroundColor: isActive ? '#0045AF' : '',
                 })}
               >
-                {icons[pages.indexOf(page)]}
+                {page.icon}
                 {page.name.toUpperCase()}
               </NavLinkMenu>
             ))}
