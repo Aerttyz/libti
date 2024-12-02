@@ -1,6 +1,6 @@
 import React from 'react';
 import { styled, Grid2 as Grid, Typography, TextField } from '@mui/material';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const StyledTypography = styled(Typography)(({ theme }) => ({
@@ -130,14 +130,6 @@ export default function FormContact() {
           <StyledButton type='submit'>Enviar mensagem</StyledButton>
         </StyledForm>
       </Grid>
-      <ToastContainer
-        position="bottom-right"
-        autoClose={3000}
-        closeOnClick={true}
-        pauseOnHover={true}
-        draggable={true}
-        theme="colored"
-      />
     </Grid>
   )
 }
