@@ -35,22 +35,22 @@ const StyledTypography = styled(Typography)(({ theme }) => ({
 }));
 
 const fieldsLivro = [
-  { label: 'Anexar Imagem da Capa', type: 'file', required: true },
-  { label: 'Nome do Livro', type: 'text', required: true },
-  { label: 'Link para Download', type: 'text', required: true },
-  { label: 'Autor', type: 'text' },
-  { label: 'Editora', type: 'text' },
-  { label: 'Ano de Publicação', type: 'number' },
-  { label: 'Edição', type: 'number' },
-  { label: 'ISBN', type: 'text' },
+  { id: 'imagemCapa', label: 'Anexar Imagem da Capa *', type: 'file' },
+  { id: 'nomeLivro', label: 'Nome do Livro *', type: 'text' },
+  { id: 'linkDownload', label: 'Link para Download *', type: 'text' },
+  { id: 'autor', label: 'Autor', type: 'text' },
+  { id: 'editora', label: 'Editora', type: 'text' },
+  { id: 'anoPublicacao', label: 'Ano de Publicação', type: 'number' },
+  { id: 'edicao', label: 'Edição', type: 'number' },
+  { id: 'isbn', label: 'ISBN', type: 'text' },
 ];
 
 const fieldsMaterial = [
-  { label: 'Disciplina', type: 'text', required: true },
-  { label: 'Professor', type: 'text', required: true },
-  { label: 'Semestre', type: 'text', required: true },
-  { label: 'Link para Arquivos', type: 'text', required: true },
-  { label: 'Anexar Conteúdo da Disciplina', type: 'file' },
+  { id: 'disciplina', label: 'Disciplina *', type: 'text' },
+  { id: 'professor', label: 'Professor *', type: 'text' },
+  { id: 'semestre', label: 'Semestre *', type: 'text' },
+  { id: 'linkArquivos', label: 'Link para Arquivos *', type: 'text' },
+  { id: 'conteudoDisciplina', label: 'Anexar Conteúdo da Disciplina *', type: 'file' },
 ];
 
 export default function Upload() {
@@ -71,7 +71,7 @@ export default function Upload() {
           />
         </Grid>
         <Grid item size={12} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-          {toggleValue === 'disciplina' ? <FormUpload fields={fieldsMaterial} /> : <FormUpload fields={fieldsLivro} />}
+          {toggleValue === 'disciplina' ? <FormUpload typeForm={toggleValue} fields={fieldsMaterial} /> : <FormUpload typeForm={toggleValue} fields={fieldsLivro} />}
         </Grid>
       </Grid>
     </ContainerUpload>
