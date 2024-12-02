@@ -95,26 +95,29 @@ const handleSubmit = (e, login, isLogin, navigate, location) => {
   const username = e.target.email.value;
   const password = e.target.password.value;
 
-  if (!username || !password) {
-    toast.warn('Preencha todos os campos!');
-  }
-
   if (isLogin) {
+    if (!username || !password) {
+      toast.warn('Preencha todos os campos!');
+      return;
+    }
     if (username === 'admin@admin' && password === '12345') {
       login();
       navigate(redirectTo, { replace: true });
       toast.success('Login efetuado com sucesso!');
     } else {
       toast.error('Email ou senha inválidos!');
+      return;
     }
   } else {
     const confirmPassword = e.target.confirmPassword.value;
 
-    if (!confirmPassword) {
+    if (!username || !password || !confirmPassword) {
       toast.warn('Preencha todos os campos!');
+      return;
     }
     if (password !== confirmPassword) {
       toast.warn('As senhas não coincidem!');
+      return;
     }
     login();
     navigate(redirectTo, { replace: true });
