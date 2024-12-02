@@ -1,24 +1,27 @@
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import Drawer from './sections/Drawer';
-import { 
-  AppBar, 
-  Box, 
-  Toolbar, 
-  Typography, 
-  Container, 
-  Button 
+import {
+  AppBar,
+  Box,
+  Toolbar,
+  Typography,
+  Container,
+  Button,
+  Avatar
 } from '@mui/material';
-import { 
-  Home, 
-  CloudUpload, 
+import {
+  Home,
+  CloudUpload,
   CloudDownload,
   Forum,
   MailOutline,
   Login,
+  Logout,
   PersonAddOutlined,
 } from '@mui/icons-material';
 import { NavLink } from 'react-router-dom';
+import { useAuth } from '../../contexts/AuthContext';
 
 const StyledAppBar = styled(AppBar)(() => ({
   display: 'block',
@@ -42,12 +45,12 @@ const NavLinkMenu = styled(NavLink)(() => ({
 }));
 
 const StyledButton = styled(Button)(() => ({
-  backgroundColor: 'white', 
-  width: '90px', 
-  borderRadius: '7px', 
-  color: 'black', 
-  fontSize: 12, 
-  fontFamily: 'Roboto', 
+  backgroundColor: 'white',
+  width: '90px',
+  borderRadius: '7px',
+  color: 'black',
+  fontSize: 12,
+  fontFamily: 'Roboto',
   marginRight: 2
 }));
 
@@ -68,9 +71,9 @@ const StyledTypography = styled(Typography)(({ theme }) => ({
 }));
 
 const StyledBox = styled(Box)(({ theme }) => ({
-  flexGrow: 1, 
-  alignItems: 'center', 
-  justifyContent: 'center', 
+  flexGrow: 1,
+  alignItems: 'center',
+  justifyContent: 'center',
   paddingLeft: 10,
   [theme.breakpoints.down('md')]: {
     display: 'none',
@@ -80,16 +83,16 @@ const StyledBox = styled(Box)(({ theme }) => ({
   },
 }));
 
-function StyledIcons (Icon) {
+function StyledIcons(Icon) {
   return <Icon sx={{ marginRight: 1, width: '21px' }} />;
 }
 
 const pages = [
-  { name: 'home', url: '/' }, 
-  { name: 'upload', url: '/upload' }, 
-  { name: 'requests', url: '/requests' }, 
-  { name: 'fórum', url: '/forum' }, 
-  { name: 'contato', url: '/contato' }, 
+  { name: 'home', url: '/', role: 'all' },
+  { name: 'upload', url: '/upload', role: 'all' },
+  { name: 'requests', url: '/requests', role: 'admin' },
+  { name: 'fórum', url: '/forum', role: 'all' },
+  { name: 'contato', url: '/contato', role: 'all' },
 ];
 const icons = [
   StyledIcons(Home),
@@ -100,6 +103,8 @@ const icons = [
 ];
 
 function ResponsiveAppBar() {
+  const { isAuthenticated, logout } = useAuth();
+
   return (
     <StyledAppBar>
       <Container maxWidth="xl">
@@ -111,11 +116,11 @@ function ResponsiveAppBar() {
             <a href='/' style={{ textDecoration: 'none', color: 'white' }}>LIB<span style={{ color: '#013A93', WebkitTextStroke: '1px white' }}>TI</span></a>
           </StyledTypography>
           <StyledBox>
-            {pages.map((page) => (
+            {pages.filter(page => !isAuthenticated ? page.role !== 'admin' : page).map((page) => (
               <NavLinkMenu
                 key={page.name}
                 to={page.url}
-                style={({isActive}) => ({
+                style={({ isActive }) => ({
                   backgroundColor: isActive ? '#0045AF' : '',
                 })}
               >
@@ -124,16 +129,36 @@ function ResponsiveAppBar() {
               </NavLinkMenu>
             ))}
           </StyledBox>
-          <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <StyledButton component={NavLink} to={'/login'}>
-              <Login sx={{ marginRight: 1, width: '18px' }} />
-              LOGIN
-            </StyledButton>
-            <Button color='inherit' sx={{ fontSize: 12, fontFamily: 'Roboto' }} component={NavLink} to='/cadastro'>
-              <PersonAddOutlined sx={{ marginRight: 1, width: '18px' }} />
-              CRIAR CONTA
-            </Button>
-          </Box>
+          {!isAuthenticated ? (
+            <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+              <StyledButton component={NavLink} to={'/login'}>
+                <Login sx={{ marginRight: 1, width: '18px' }} />
+                LOGIN
+              </StyledButton>
+              <Button color='inherit' sx={{ fontSize: 12, fontFamily: 'Roboto' }} component={NavLink} to='/cadastro'>
+                <PersonAddOutlined sx={{ marginRight: 1, width: '18px' }} />
+                CRIAR CONTA
+              </Button>
+            </Box>
+          ) : (
+            <Box sx={{ display: { xs: 'none', md: 'flex' }, alignItems: 'center' }}>
+              <Avatar
+                src="https://super.abril.com.br/wp-content/uploads/2018/07/5281183b865be245b1000225gorila.jpeg?quality=70&w=720&crop=1"
+                sx={{
+                  width: 40,
+                  height: 40,
+                  marginRight: 2,
+                  cursor: 'pointer'
+                }}
+                component={NavLink}
+                to='/perfil'
+              />
+              <Button color='inherit' sx={{ fontSize: 12, fontFamily: 'Roboto' }} onClick={logout}>
+                <Logout sx={{ marginRight: 1, width: '18px' }} />
+                SAIR
+              </Button>
+            </Box>
+          )}
         </Toolbar>
       </Container>
     </StyledAppBar>
