@@ -5,8 +5,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import LoadingBar from "./components/loadingPage/Loading";
 import SearchContent from "./pages/search/SearchContent";
-import { AuthProvider } from "./services/AuthContext";
-import PrivateRoute from "./services/PrivateRoute";
+import { AuthProvider } from "./contexts/AuthContext";
+import PrivateRoute from "./contexts/PrivateRoute";
 
 const LazyHome = React.lazy(() => import("./pages/home/Home"));
 const LazyAuth = React.lazy(() => import("./pages/auth/Auth"));
@@ -16,6 +16,7 @@ const LazyNotFound = React.lazy(() => import("./pages/notFound/NotFound"));
 const LazyRequests = React.lazy(() => import("./pages/requests/Requests"));
 const LazySearch = React.lazy(() => import("./pages/search/Search"));
 const LazyForum = React.lazy(() => import("./pages/forum/Forum"));
+const LazyProfile = React.lazy(() => import("./pages/profile/Profile"));
 
 const router = createBrowserRouter([
   {
@@ -91,6 +92,17 @@ const router = createBrowserRouter([
         <Navbar />
         <Suspense fallback={<LoadingBar />}>
           <LazyContact />
+        </Suspense>
+      </>
+    ),
+  },
+  {
+    path: "/perfil",
+    element: (
+      <>
+        <Navbar />
+        <Suspense fallback={<LoadingBar />}>
+          <PrivateRoute element={<LazyProfile />} />
         </Suspense>
       </>
     ),

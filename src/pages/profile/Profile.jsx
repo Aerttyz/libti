@@ -1,7 +1,8 @@
 import React from "react";
 import { styled } from "@mui/material/styles";
-import { Typography, Box, Avatar, TextField, Button } from "@mui/material";
+import { Box, Avatar, TextField, Button, InputAdornment } from "@mui/material";
 import { toast } from "react-toastify";
+import { Edit } from "@mui/icons-material";
 
 const StyledForm = styled("form")(() => ({
   width: "100%",
@@ -34,20 +35,31 @@ const style = {
   alignItems: "center",
   justifyContent: "center",
   width: { xs: "90%", sm: "70%" },
-  margin: "10px auto",
+  margin: "auto",
   padding: 2,
-  mt: { xs: 2, sm: 10 },
+  mt: { xs: 2, sm: 5 },
 };
 
-export default function Profile() {
 const handleReport = (e) => {
-    e.preventDefault();
-    if(e.target.name.value === "" || e.target.email.value === "" || e.target.password.value === ""){
-      toast.warn("Preencha todos os campos!");
-    }else{
-      toast.success("Perfil alterado com Sucesso!");
-    }
-  };
+  e.preventDefault();
+  if (e.target.name.value === "" || e.target.email.value === "" || e.target.password.value === "") {
+    toast.warn("Preencha todos os campos!");
+  } else {
+    toast.success("Perfil alterado com Sucesso!");
+  }
+};
+
+
+export default function Profile() {
+  const [disabled, setDisabled] = React.useState({
+    email: true,
+    senha: true
+  });
+
+  const handleEdit = (field) => {
+    setDisabled({ ...disabled, [field]: !disabled[field] });
+  }
+
   return (
     <Box sx={style}>
       <Box
@@ -87,34 +99,47 @@ const handleReport = (e) => {
             label="Nome"
             variant="outlined"
             margin="normal"
+            value={"Admin"}
           />
           <TextField
             id="email"
             label="Email"
             variant="outlined"
             margin="normal"
-
-           
+            value={"admin@admin"}
+            disabled={disabled.email}
+            slotProps={{
+              input: {
+                endAdornment: <InputAdornment position="end" sx={{ cursor: 'pointer' }} onClick={() => handleEdit('email')}><Edit /></InputAdornment>,
+              },
+            }}
           />
           <TextField
             id="password"
             label="Senha"
+            type="password"
             variant="outlined"
             margin="normal"
+            value={"12345"}
+            disabled={disabled.senha}
+            slotProps={{
+              input: {
+                endAdornment: <InputAdornment position="end" sx={{ cursor: 'pointer' }} onClick={() => handleEdit('senha')}><Edit /></InputAdornment>,
+              },
+            }}
           />
-        <Button
-          variant="outlined"
-          sx={{
-            bgcolor: "#6899E6",
-            color: "white",
-            mt: 2,
-          }}
-          type="submit"
-        >
-          Salvar Alterações
-        </Button>
+          <Button
+            variant="outlined"
+            sx={{
+              bgcolor: "#6899E6",
+              color: "white",
+              mt: 2,
+            }}
+            type="submit"
+          >
+            Salvar Alterações
+          </Button>
         </StyledForm>
-
       </Box>
     </Box>
   );

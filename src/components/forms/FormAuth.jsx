@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useAuth } from '../../services/AuthContext';
+import { useAuth } from '../../contexts/AuthContext';
 import { styled } from '@mui/material/styles';
 import { TextField, Typography, Box, Divider, Grid2 as Grid } from '@mui/material';
 import { faBookSkull } from '@fortawesome/free-solid-svg-icons';
