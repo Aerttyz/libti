@@ -76,9 +76,9 @@ export default function Auth(props) {
           <FormAuth
             title={props.isLogin ? 'Fazer Login' : 'Criar conta'}
             fields={[
-              { fieldName: 'Email', type: 'email' },
-              { fieldName: 'Senha', type: 'password' },
-              ...(!props.isLogin ? [{ fieldName: 'Confirme sua senha', type: 'password' }] : []),
+              { field: 'email', fieldName: 'Email', type: 'email' },
+              { field: 'password', fieldName: 'Senha', type: 'password' },
+              ...(!props.isLogin ? [{ field: 'confirmPassword', fieldName: 'Confirme sua senha', type: 'password' }] : []),
             ]}            
             isLogin={props.isLogin}
           />
