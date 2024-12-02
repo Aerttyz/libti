@@ -19,7 +19,7 @@ import {
 } from '@mui/icons-material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleCheck, faCircleXmark } from '@fortawesome/free-solid-svg-icons';
-import { toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 
 function createData(codigo, disciplina, userEnvio) {
   return {
@@ -176,6 +176,14 @@ export default function CardRequests() {
           ))}
         </TableBody>
       </Table>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={3000}
+        closeOnClick={true}
+        pauseOnHover={true}
+        draggable={true}
+        theme="colored"
+      />
     </TableContainer>
   );
 }
