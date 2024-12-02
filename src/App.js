@@ -5,6 +5,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import LoadingBar from "./components/loadingPage/Loading";
 import SearchContent from "./pages/search/SearchContent";
+import { AuthProvider } from "./services/AuthContext";
+import PrivateRoute from "./services/PrivateRoute";
 
 const LazyHome = React.lazy(() => import("./pages/home/Home"));
 const LazyAuth = React.lazy(() => import("./pages/auth/Auth"));
@@ -55,7 +57,7 @@ const router = createBrowserRouter([
       <>
         <Navbar />
         <Suspense fallback={<LoadingBar />}>
-          <LazyUpload />
+          <PrivateRoute element={<LazyUpload />} />
         </Suspense>
       </>
     ),
@@ -66,7 +68,7 @@ const router = createBrowserRouter([
       <>
         <Navbar />
         <Suspense fallback={<LoadingBar />}>
-          <LazyRequests />
+          <PrivateRoute element={<LazyRequests />} />
         </Suspense>
       </>
     ),
@@ -77,7 +79,7 @@ const router = createBrowserRouter([
       <>
         <Navbar />
         <Suspense fallback={<LoadingBar />}>
-          <LazyForum />
+          <PrivateRoute element={<LazyForum />} />
         </Suspense>
       </>
     ),
@@ -125,17 +127,17 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <>
+    <AuthProvider>
       <RouterProvider router={router} />
-      <ToastContainer 
-        position="bottom-right" 
-        autoClose={3000} 
-        closeOnClick={true} 
-        pauseOnHover={true} 
-        draggable={true} 
+      <ToastContainer
+        position="bottom-right"
+        autoClose={3000}
+        closeOnClick={true}
+        pauseOnHover={true}
+        draggable={true}
         theme="colored"
-        />
-    </>
+      />
+    </AuthProvider>
   );
 }
 

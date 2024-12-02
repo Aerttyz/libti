@@ -1,13 +1,16 @@
 import * as React from 'react';
+import { useAuth } from '../../services/AuthContext';
 import { styled } from '@mui/material/styles';
 import { TextField, Typography, Box, Divider, Grid2 as Grid } from '@mui/material';
 import { faBookSkull } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { toast } from 'react-toastify';
+import { useNavigate, useLocation } from 'react-router-dom';
 
-function FormTextField(label, type) {
+function FormTextField(label, type, field) {
   return (
     <Box sx={{ width: 500, maxWidth: { xs: '80%', md: '65%' }, marginBottom: 2 }}>
-      <StyledTextField fullWidth type={type} size='small' label={label} id={label} required />
+      <StyledTextField fullWidth type={type} size='small' label={label} id={field} />
     </Box>
   );
 }
@@ -86,7 +89,50 @@ const StyledSubmit = styled('input')(({ theme }) => ({
   }
 }));
 
+const handleSubmit = (e, login, isLogin, navigate, location) => {
+  e.preventDefault();
+  const redirectTo = location.state?.from?.pathname || "/";
+  const username = e.target.email.value;
+  const password = e.target.password.value;
+
+  if (!username || !password) {
+    toast.warn('Preencha todos os campos!');
+  }
+
+  if (isLogin) {
+    if (username === 'admin@admin' && password === '12345') {
+      login();
+      navigate(redirectTo, { replace: true });
+      toast.success('Login efetuado com sucesso!');
+    } else {
+      toast.error('Email ou senha inválidos!');
+    }
+  } else {
+    const confirmPassword = e.target.confirmPassword.value;
+
+    if (!confirmPassword) {
+      toast.warn('Preencha todos os campos!');
+    }
+    if (password !== confirmPassword) {
+      toast.warn('As senhas não coincidem!');
+    }
+    login();
+    navigate(redirectTo, { replace: true });
+    toast.success('Conta criada com sucesso!');
+  }
+};
+
 export function FormAuth(props) {
+  const { login, logout, isAuthenticated } = useAuth();
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  React.useEffect(() => {
+    if (isAuthenticated) {
+      logout();
+    }
+  }, [isAuthenticated, logout]);
+
   return (
     <DivForm>
       <Typography
@@ -114,8 +160,8 @@ export function FormAuth(props) {
       >
         <FontAwesomeIcon icon={faBookSkull} style={{ marginRight: '10px' }} />LIBTI
       </Typography>
-      <StyledForm method='post' action={props.url}>
-        {props.fields.map((field) => FormTextField(field.fieldName, field.type))}
+      <StyledForm onSubmit={(e) => handleSubmit(e, login, props.isLogin, navigate, location)}>
+        {props.fields.map((field) => FormTextField(field.fieldName, field.type, field.field))}
         <StyledSubmit type='submit' value={props.title} />
         {props.isLogin && (
           <Grid container sx={{ width: { xs: '80%', sm: '90%', md: '65%' }, mt: '20px' }}>
