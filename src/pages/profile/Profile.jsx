@@ -1,6 +1,7 @@
 import React from "react";
 import { styled } from "@mui/material/styles";
 import { Typography, Box, Avatar, TextField, Button } from "@mui/material";
+import { toast } from "react-toastify";
 
 const StyledForm = styled("form")(() => ({
   width: "100%",
@@ -39,6 +40,14 @@ const style = {
 };
 
 export default function Profile() {
+const handleReport = (e) => {
+    e.preventDefault();
+    if(e.target.name.value === "" || e.target.email.value === "" || e.target.password.value === ""){
+      toast.warn("Preencha todos os campos!");
+    }else{
+      toast.success("Perfil alterado com Sucesso!");
+    }
+  };
   return (
     <Box sx={style}>
       <Box
@@ -68,11 +77,11 @@ export default function Profile() {
               margin: "auto 10px",
             }}
           >
-            Selecionar Imagem
+            Alterar Foto de Perfil
             <input type="file" accept="image/*" hidden />
           </Button>
         </Box>
-        <StyledForm>
+        <StyledForm onSubmit={handleReport}>
           <TextField
             id="name"
             label="Nome"
@@ -80,10 +89,12 @@ export default function Profile() {
             margin="normal"
           />
           <TextField
-            id="content"
+            id="email"
             label="Email"
             variant="outlined"
             margin="normal"
+
+           
           />
           <TextField
             id="password"
@@ -91,17 +102,19 @@ export default function Profile() {
             variant="outlined"
             margin="normal"
           />
-        </StyledForm>
-
         <Button
           variant="outlined"
           sx={{
             bgcolor: "#6899E6",
             color: "white",
+            mt: 2,
           }}
+          type="submit"
         >
           Salvar Alterações
         </Button>
+        </StyledForm>
+
       </Box>
     </Box>
   );
