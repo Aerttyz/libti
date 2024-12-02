@@ -5,8 +5,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import LoadingBar from "./components/loadingPage/Loading";
 import SearchContent from "./pages/search/SearchContent";
-import { AuthProvider } from "./services/AuthContext";
-import PrivateRoute from "./services/PrivateRoute";
+import { AuthProvider } from "./contexts/AuthContext";
+import PrivateRoute from "./contexts/PrivateRoute";
 
 const LazyHome = React.lazy(() => import("./pages/home/Home"));
 const LazyAuth = React.lazy(() => import("./pages/auth/Auth"));
