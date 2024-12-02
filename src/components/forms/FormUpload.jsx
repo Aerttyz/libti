@@ -1,11 +1,15 @@
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import { TextField, Box, Grid2 as Grid } from '@mui/material';
+import InputFile from './InputFile';
 
-function FormTextField(label, type) {
+function FormTextField(label, type, required) {
+  if (type === 'file') {
+    return <InputFile label={label} />;
+  }
   return (
     <Box sx={{ width: '100%', marginBottom: 3 }}>
-      <StyledTextField fullWidth type={type} label={label} id={label} />
+      <StyledTextField fullWidth type={type} label={label} id={label} required={required} />
     </Box>
   );
 }
@@ -84,17 +88,13 @@ const StyledSubmit = styled('input')(() => ({
   }
 }));
 
-export function FormUpload() {
+export function FormUpload({ fields }) {
   return (
     <DivForm>
       <ContainerUploadForm>
         <Grid container>
           <StyledForm method='post' action='/upload'>
-            {FormTextField('Matéria', 'text')}
-            {FormTextField('Professor', 'text')}
-            {FormTextField('Semestre', 'text')}
-            {FormTextField('Link de Arquivos', 'text')}
-            {FormTextField('', 'file')}
+            {fields.map((field) => FormTextField(field.label, field.type, field.required))}
             <StyledSubmit type='submit' value='Enviar Requisição' />
           </StyledForm>
         </Grid>
